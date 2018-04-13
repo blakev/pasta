@@ -1,0 +1,11 @@
+[pasta]
+limit_uuid = 8
+
+[static]
+path = "./static"
+
+[templates]
+    [templates.loader]
+    searchpath = ["./templates"]
+    encoding = "utf-8"
+    followlinks = false
