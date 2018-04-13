@@ -1,0 +1,31 @@
+import os
+
+
+def env(s, as_=None, default=None):
+    if as_ is None:
+        as_ = str
+    assert callable(as_)
+    return as_(os.getenv(f'GUNICORN_{s.upper()}', default))
+
+
+def b_(v):
+    return bool(int(v))
+
+
+name = 'pasta-web'
+bind = '0.0.0.0:8000'
+debug = env('debug', b_)
+reload = env('reload', b_)
+preload_app = True
+daemonize = False
+chdir = r'/app'
+workers = env('workers', int, 2)
+worker_class = 'sync'
+threads = workers * 4
+worker_connections = env('connections', int, 128)
+timeout = env('timeout', int, 60)
+keep_alive = env('keep_alive', int, 30)
+
+access_logfile = r'/var/log/pasta/access.log'
+error_logfile = r'/var/log/pasta/access-errors.log'
+log_level = 'warning'

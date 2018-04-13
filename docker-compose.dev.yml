@@ -1,0 +1,9 @@
+version: "3.5"
+
+services:
+  pasta:
+    volumes:
+      - "./:/app"
+      - "/tmp/pasta-data:/data"
+    ports:
+      - "8000:8000"
