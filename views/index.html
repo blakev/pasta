@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/css/normalize.css">
+    <link rel="stylesheet" href="/static/css/milligram.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <title>Pasta</title>
+</head>
+
+%if paste_data is None:
+<div class="container">
+    <div class="row">
+        <div class="column">
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="column">
+            <form action="/{{ sha }}" method="post">
+                <fieldset>
+                    <label for="titleField">Title</label>
+                    <input type="text" id="titleField" name="titleField">
+
+                    <label for="contentsField">Contents</label>
+                    <textarea name="contentsField" id="contentsField"></textarea>
+
+                    <div class="float-right">
+                        <a href='/' class="button button-outline">new</a>
+                        <input type="submit" class="button-primary" value="paste">
+                    </div>
+
+                    <input type="checkbox" id="encryptBox" name="encryptBox">
+                    <label for="encryptBox" class="label-inline">Encrypt paste?</label>
+                </fieldset>
+
+                <input type="hidden" name="pageToken" value="{{ page_token }}">
+                <input type="hidden" name="timestamp" value="{{ timestamp }}">
+            </form>
+        </div>
+    </div>
+</div>
+%end
+
+%if paste_data is not None:
+
+{{ paste_data }}
+
+%end
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+body {
+    padding: 3em;
+}
+
+textarea {
+    min-height: 25em;
+}
