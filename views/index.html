@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/static/css/normalize.css">
-    <link rel="stylesheet" href="/static/css/milligram.min.css">
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/normalize.css">
+    <link rel="stylesheet" href="/static/milligram.min.css">
+    <link rel="stylesheet" href="/static/style.css">
     <title>Pasta</title>
 </head>
 
-%if paste_data is None:
 <div class="container">
     <div class="row">
         <div class="column">
@@ -28,11 +27,8 @@
 
                     <div class="float-right">
                         <a href='/' class="button button-outline">new</a>
-                        <input type="submit" class="button-primary" value="paste">
-                    </div>
 
-                    <input type="checkbox" id="encryptBox" name="encryptBox">
-                    <label for="encryptBox" class="label-inline">Encrypt paste?</label>
+                    </div>
                 </fieldset>
 
                 <input type="hidden" name="pageToken" value="{{ page_token }}">
@@ -41,13 +37,19 @@
         </div>
     </div>
 </div>
-%end
 
-%if paste_data is not None:
+{{ token }}<br>
+{{ uuid }}
 
-{{ paste_data }}
+<form action="/{{ uuid }}" method="post">
+    {{ form.csrf_token }}
+    {{ form.token }}
 
-%end
+    {{ form.title.label }}{{ form.title() }}
+    {{ form.content.label }}{{ form.content() }}
+
+    <input type="submit" class="button-primary" value="paste">
+</form>
 
 </body>
 </html>
