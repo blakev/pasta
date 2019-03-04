@@ -1,20 +1,28 @@
-FROM python:3-alpine3.6
+FROM python:3-alpine
 
 MAINTAINER "Blake VandeMerwe <blakev@null.net>"
+
+EXPOSE 8000
 
 RUN mkdir -p \
     /var/log/pasta \
     /data \
     /app
-
 WORKDIR /app
-RUN python -m venv --system-site-packages /app/.env
-RUN chmod +x /app/.env/bin/activate
-RUN /app/.env/bin/activate
+
+RUN apk add --update \
+    build-base \
+    libffi-dev \
+    openssl-dev
 
 COPY ./requirements.txt /app
 RUN python -m pip install --no-cache-dir -r requirements.txt
 
-COPY ./ /app
+RUN apk del --purge \
+    build-base \
+    libffi-dev \
+    openssl-dev
 
+COPY . /app
 VOLUME /data
+CMD ["gunicorn", "--config", "/app/.gunicorn", "pasta:app"]

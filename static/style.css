@@ -1,7 +1,24 @@
 body {
-    padding: 3em;
+    padding: 1em;
 }
 
 textarea {
     min-height: 25em;
+}
+
+pre {
+    border-left: 0.2rem solid #232323;
+}
+
+.hashsums {
+    font-family: monospace;
+    text-align: left;
+}
+
+.center {
+    text-align: center;
+}
+
+.right {
+    text-align: right;
 }

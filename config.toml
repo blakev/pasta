@@ -1,0 +1,27 @@
+logging_path='logging.ini'
+force_keygen=false
+keygen_keycount=16
+
+# all the pastes/data go here
+data_folder='/data'
+
+# file/data encoding; needs to be consistent
+encoding='utf-8'
+
+# exclude these characters from the ASCII alphabet
+uuids_do_not_include="0OQl1I"
+
+# fixed-length of the filenames on disk and uri via HTTP
+uuids_size=4
+token_size=64
+
+[pastes]
+    max_size=256000
+    # allow the user this many seconds to keep the edit/delete page
+    # open before their token expires in the database;
+    uuid_expires_in=900
+
+[flask]
+    DEBUG=false
+    TESTING=false
+    TEMPLATES_AUTO_RELOAD=false

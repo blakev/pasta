@@ -6,50 +6,57 @@
     <link rel="stylesheet" href="/static/normalize.css">
     <link rel="stylesheet" href="/static/milligram.min.css">
     <link rel="stylesheet" href="/static/style.css">
-    <title>Pasta</title>
+    <title>Pasta Pastebin</title>
 </head>
+<body>
 
-<div class="container">
+
+{% if editable %}
+
+    <div class="container">
+        <div class="row">
+            <div class="column">
+                <form action="/{{ uuid }}" method="post">
+                    {{ form.csrf_token }}
+                    {{ form.token() }}
+
+                    <fieldset>
+                        {{ form.title.label }}{{ form.title() }}
+                        {{ form.content.label }}{{ form.content() }}
+
+                        <div class="float-right">
+                            <input type="submit" class="button-primary" value="paste">
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% else -%}
     <div class="row">
-        <div class="column">
-
+        <div class="column column-67 hashsums">
+            MD5: {{ data.md5 }} <br>
+            SHA1: {{ data.sha1 }} <br>
+            {{ size|filesizeformat }}
+        </div>
+        <div class="column column-33 right">
+            <h4>
+                <a href="{{ url_for('handle_raw_paste', uuid=uuid) }}">{{ data.title }}</a>
+            </h4>
+                <a href="{{ url_for('index') }}">New</a>
+            {% if can_delete %}
+                <a href="{{ url_for('handle_delete_paste', uuid=uuid, token=token) }}">Delete</a>
+            {% endif %}
         </div>
     </div>
     <div class="row">
         <div class="column">
-            <form action="/{{ sha }}" method="post">
-                <fieldset>
-                    <label for="titleField">Title</label>
-                    <input type="text" id="titleField" name="titleField">
-
-                    <label for="contentsField">Contents</label>
-                    <textarea name="contentsField" id="contentsField"></textarea>
-
-                    <div class="float-right">
-                        <a href='/' class="button button-outline">new</a>
-
-                    </div>
-                </fieldset>
-
-                <input type="hidden" name="pageToken" value="{{ page_token }}">
-                <input type="hidden" name="timestamp" value="{{ timestamp }}">
-            </form>
+            <pre><code>{{ data.contents }}</code></pre>
         </div>
     </div>
-</div>
 
-{{ token }}<br>
-{{ uuid }}
-
-<form action="/{{ uuid }}" method="post">
-    {{ form.csrf_token }}
-    {{ form.token }}
-
-    {{ form.title.label }}{{ form.title() }}
-    {{ form.content.label }}{{ form.content() }}
-
-    <input type="submit" class="button-primary" value="paste">
-</form>
+{%- endif %}
 
 </body>
 </html>
