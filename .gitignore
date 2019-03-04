@@ -1,4 +1,5 @@
 .idea/
+default.toml
 data/
 !data/.gitkeep
 
